@@ -1,25 +1,46 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Chat from './Chat';
 import './App.css';
 
 function App() {
+  const [sender, setSender] = useState('');
+  const [receiver, setReceiver] = useState('');
+  const [isChatting, setIsChatting] = useState(false);
+
+  const handleStartChat = () => {
+    if (sender && receiver) {
+      setIsChatting(true);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!isChatting ? (
+        <div className='input'>
+          <input
+            type="text"
+            placeholder="Your Name"
+            value={sender}
+            onChange={(e) => setSender(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Recipient Name"
+            value={receiver}
+            onChange={(e) => setReceiver(e.target.value)}
+          />
+          <button onClick={handleStartChat}>Start Chat</button>
+        </div>
+      ) : (
+        <Chat sender={sender} receiver={receiver} />
+      )}
     </div>
   );
 }
 
 export default App;
+
+
+
+
+
